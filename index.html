@@ -1,0 +1,271 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AX07.DEV</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff3d8b;--orange:#ff9a3d;--teal:#2de2d0;--ink:#12051f}
+*{margin:0;box-sizing:border-box}
+body{background:var(--ink);color:#fff;font:400 18px/1.5 'Space Grotesk',sans-serif;overflow-x:hidden}
+h1,h2,.big{font-family:Anton,sans-serif;text-transform:uppercase;line-height:.9;font-weight:400}
+nav{position:fixed;inset:0 0 auto;display:flex;justify-content:space-between;padding:20px 4vw;z-index:10;mix-blend-mode:difference;font-weight:600;letter-spacing:.2em;font-size:13px}
+nav a{color:#fff;text-decoration:none}
+.wrap{height:400vh;position:relative}
+.hero{position:sticky;top:0;height:100vh;overflow:hidden}
+.sky,.night{position:absolute;inset:0}
+.sky{background:linear-gradient(#2a0a5e,#c2306f 55%,#ff9a3d)}
+.night{background:linear-gradient(#05010d,#1c0638 60%,#5a1456);opacity:0}
+.sun{position:absolute;left:50%;top:26%;width:min(46vw,520px);aspect-ratio:1;translate:-50% 0;border-radius:50%;background:linear-gradient(#ffe45e,var(--pink));
+ -webkit-mask:repeating-linear-gradient(#000 0 14px,transparent 14px 19px) bottom/100% 45% no-repeat,linear-gradient(#000,#000) top/100% 56% no-repeat;
+ mask:repeating-linear-gradient(#000 0 14px,transparent 14px 19px) bottom/100% 45% no-repeat,linear-gradient(#000,#000) top/100% 56% no-repeat}
+.layer{position:absolute;left:0;right:0;bottom:0;width:100%;height:62%}
+.layer svg{width:100%;height:100%;display:block}
+.title{position:absolute;inset:0;display:grid;place-content:center;text-align:center;pointer-events:none}
+.title h1{font-size:clamp(56px,14vw,260px);background:linear-gradient(#fff,#ffd1e6 50%,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 10px 40px #0007)}
+.title p{letter-spacing:.5em;font-size:14px;text-transform:uppercase;margin-top:1rem}
+@media(max-width:600px){.title p{letter-spacing:.2em;padding:0 6vw}}
+.hint{position:absolute;bottom:4vh;left:50%;translate:-50%;font-size:12px;letter-spacing:.4em;opacity:.8}
+.hero2{position:absolute;inset:0;display:grid;place-content:center;text-align:center;opacity:0}
+.hero2 h2{font-size:clamp(48px,9vw,140px)}
+/* gameplay video */
+.vid{position:sticky;top:0;height:100vh;overflow:hidden;background:#000}
+.frame{position:absolute;inset:0;clip-path:inset(22% 28% round 24px);overflow:hidden}
+.rot{transform-box:fill-box;transform-origin:center;animation:rot .12s linear infinite}@keyframes rot{50%{transform:scaleX(.15)}}
+.lb{position:absolute;left:0;top:0;pointer-events:none;opacity:0;white-space:nowrap;padding-left:12px;border-left:2px solid var(--pink)}
+.lb b{font:400 clamp(18px,2.4vw,34px) Anton;text-transform:uppercase;display:block;line-height:1}
+.lb span{font-size:12px;letter-spacing:.2em;color:var(--teal);text-transform:uppercase}
+.vt{position:absolute;left:5vw;bottom:8vh;font-size:clamp(48px,10vw,160px);text-shadow:0 6px 40px #000a;opacity:0}
+/* 3D gun */
+.gun{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 55%,#4a1245,#0a0314 70%)}
+.gun canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+.gun .cap{position:absolute;left:5vw;top:14vh;pointer-events:none}
+.gun .cap h2{font-size:clamp(44px,8vw,120px)}
+.gun .cap p{letter-spacing:.3em;font-size:13px;color:var(--teal);margin-top:1rem}
+.stage{height:100vh;position:sticky;top:0;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 70% 30%,#5a1456,#12051f 70%)}
+.ch{position:absolute;inset:0;opacity:0}
+.ch>div:first-child{position:absolute;left:6vw;bottom:10vh;max-width:min(520px,88vw)}
+.win{position:absolute;right:4vw;top:11vh;width:min(54vw,760px);transform:rotate(1.5deg);filter:drop-shadow(0 30px 60px #ff3d8b55)}
+.win small{display:block;margin-top:10px;font-size:12px;letter-spacing:.3em;color:#ffffffaa;text-align:right}
+@media(max-width:800px){.win{width:90vw;right:5vw;top:9vh;transform:none}.ch .n{font-size:80px}.ch>div:first-child{bottom:6vh}.ch p{font-size:15px}}
+.art{position:relative;aspect-ratio:16/9;background:#12051f;border-radius:4px;overflow:hidden}.art svg{display:block;width:100%;height:100%}
+.art video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sw{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3.5s ease-in-out infinite}@keyframes sway{50%{transform:rotate(2.5deg)}}
+.boat{animation:drift 9s linear infinite}@keyframes drift{from{transform:translateX(-60px)}to{transform:translateX(380px)}}
+.wv rect{animation:wave 2.6s ease-in-out infinite alternate}@keyframes wave{to{transform:translateX(16px)}}
+.tw{animation:blink 2.4s ease-in-out infinite}@keyframes blink{50%{opacity:.15}}
+.st{animation:drift 2.2s linear infinite}
+.pa{animation:pol .5s steps(1) infinite}.pb{animation:pol .5s steps(1) infinite reverse}@keyframes pol{50%{opacity:.08}}
+.sl{transform-origin:200px 0;animation:sweep 4s ease-in-out infinite alternate}@keyframes sweep{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
+.star{animation:star 3s steps(1) infinite;fill:#ffffff40}@keyframes star{20%,100%{fill:#ffd23f}}
+.win small{display:block;padding:8px 12px;font-size:12px;letter-spacing:.2em;color:#ffffffaa;background:#1c1c24}
+@media(max-width:800px){.ch{grid-template-columns:1fr;gap:2vh}.win{order:-1}.ch .n{font-size:90px}.ch p{font-size:15px}}
+.ch .n{font-family:Anton;font-size:clamp(90px,13vw,190px);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--teal)}
+.ch h2{font-size:clamp(40px,7vw,96px);margin:.2em 0}
+.ch p{opacity:.85;max-width:52ch}
+.skills{padding:20vh 5vw}
+.skills h2{font-size:clamp(50px,10vw,150px);margin-bottom:8vh}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:#ffffff0d;border:1px solid #ffffff22;border-radius:18px;padding:28px;backdrop-filter:blur(10px)}
+.card .st{color:var(--orange);letter-spacing:.2em}
+.card h3{font:400 30px Anton;text-transform:uppercase;margin:.4em 0 .2em}
+.card p{opacity:.75;font-size:16px}
+.mq{overflow:hidden;white-space:nowrap;font-size:clamp(70px,14vw,220px);color:transparent;-webkit-text-stroke:2px var(--pink);padding:6vh 0}
+.end{min-height:100vh;display:grid;place-content:center;text-align:center;background:linear-gradient(var(--ink),#c2306f 80%,#ff9a3d)}
+.end h2{font-size:clamp(60px,12vw,190px)}
+.end a{display:inline-block;margin-top:40px;padding:18px 42px;border-radius:99px;background:#fff;color:var(--ink);font-weight:600;text-decoration:none;letter-spacing:.2em}
+</style></head><body>
+<nav><a href="#">AX07.DEV</a><a href="#contact">HIRE ME</a></nav>
+
+<div class="wrap" id="w1"><div class="hero">
+ <div class="sky"></div><div class="night"></div><div class="sun"></div>
+ <div class="layer" id="far"></div><div class="layer" id="mid"></div><div class="layer" id="near"></div>
+ <div class="title"><h1>ax07.dev</h1><p>Web developer · 3D scroll experiences</p></div>
+ <div class="hero2"><h2>Every night<br>has a story</h2></div>
+ <div class="hint">SCROLL ↓</div>
+</div></div>
+
+<div class="wrap" id="w3" style="height:350vh"><div class="vid"><div class="frame" id="frame">
+ <svg id="sc" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%"></svg>
+ <div class="vt big" id="vt">Welcome<br>to Ax07.dev</div></div></div></div>
+
+<div class="wrap" id="w4" style="height:500vh"><div class="gun"><canvas id="gc"></canvas>
+ <div class="cap"><h2 class="big" id="gt">Hands on</h2><p id="gp">DRAG TO INSPECT · SCROLL TO TAKE IT APART</p></div></div></div>
+
+<div class="wrap" id="w2"><div class="stage" id="stage">
+ <div class="ch"><div><div class="n">01</div><h2>Arrival</h2><p>It started with one question: why do websites feel so flat? I wanted pages that move like a film and still load fast.</p></div><div class="win"><div class="art" data-s="1"><video src="assets/gta-1.mp4" muted loop playsinline preload="metadata" onerror="this.remove()"></video></div><small>OCEAN DRIVE · 6:42 PM</small></div></div>
+ <div class="ch"><div><div class="n">02</div><h2>The Hustle</h2><p>I like getting inside a business and watching how it really works. Then I find the pain points and build the fix: CRM systems, user dashboards, WhatsApp intake, whatever removes the friction.</p></div><div class="win"><div class="art" data-s="2"><video src="assets/gta-2.mp4" muted loop playsinline preload="metadata" onerror="this.remove()"></video></div><small>DOWNTOWN · 11:15 PM</small></div></div>
+ <div class="ch"><div><div class="n">03</div><h2>The Big Score</h2><p>Scroll-driven stories, 3D, intake systems and clean code, shipped as one package. Replace this copy with your own story.</p></div><div class="win"><div class="art" data-s="3"><video src="assets/gta-3.mp4" muted loop playsinline preload="metadata" onerror="this.remove()"></video></div><small>WANTED · LEVEL 5</small></div></div>
+</div></div>
+
+<section class="skills"><h2>Missions<br>completed</h2><div class="grid">
+ <div class="card"><div class="st">★★★★★</div><h3>3D scroll sites</h3><p>GSAP, Three.js, scroll-scrubbed video.</p></div>
+ <div class="card"><div class="st">★★★★★</div><h3>Patient intake</h3><p>Forms, portals, secure data flows.</p></div>
+ <div class="card"><div class="st">★★★★☆</div><h3>React / Next</h3><p>Fast, typed, deployed on Vercel.</p></div>
+ <div class="card"><div class="st">★★★★☆</div><h3>Motion design</h3><p>Timing, easing, restraint.</p></div>
+ <div class="card"><div class="st">★★★★☆</div><h3>Local SEO</h3><p>Schema, speed, Google Business.</p></div>
+ <div class="card"><div class="st">★★★☆☆</div><h3>Brand &amp; UI</h3><p>Palettes, type, logos from scratch.</p></div>
+</div></section>
+
+<div class="mq big" id="mq">Welcome to Ax07.dev — Welcome to Ax07.dev — Welcome to Ax07.dev —</div>
+<section class="end" id="contact"><h2>Let's<br>run it</h2><div><a href="mailto:you@example.com">GET IN TOUCH</a></div></section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const lenis=new Lenis();lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
+
+// procedural palms + skyline (swap for official art in assets/ if you like)
+const rnd=(a,b)=>a+Math.random()*(b-a);
+function palm(x,h){let s=`<path d="M${x},500 Q${x+25},${500-h/2} ${x+8},${500-h}" stroke="currentColor" stroke-width="9" fill="none"/>`;
+ const tx=x+8,ty=500-h;for(let a=-170;a<=-10;a+=26){const r=a*Math.PI/180,L=rnd(70,110);
+ s+=`<path d="M${tx},${ty} Q${tx+Math.cos(r)*L*.5},${ty+Math.sin(r)*L*.5-28} ${tx+Math.cos(r)*L},${ty+Math.sin(r)*L*.4+38}" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none"/>`}return s}
+function city(){let s='',x=0;while(x<1000){const w=rnd(25,60),h=rnd(80,260);s+=`<rect x="${x}" y="${500-h}" width="${w}" height="${h}"/>`;x+=w+rnd(0,6)}return s}
+const mk=(id,color,body)=>document.getElementById(id).innerHTML=`<svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMax slice" style="color:${color};fill:${color}">${body}</svg>`;
+mk('far','#3b0f4f',city());
+mk('mid','#1d0830',palm(120,300)+palm(430,250)+palm(760,330)+`<rect y="470" width="1000" height="30"/>`);
+mk('near','#07020d',palm(-10,420)+palm(250,360)+palm(640,400)+palm(960,440)+`<rect y="480" width="1000" height="20"/>`);
+
+// hero scrub
+gsap.timeline({scrollTrigger:{trigger:'#w1',start:'top top',end:'bottom bottom',scrub:1}})
+ .to('.sun',{y:'85vh',ease:'none'},0)
+ .to('.night',{opacity:1,ease:'none'},0)
+ .to('#far',{y:-30,ease:'none'},0).to('#mid',{y:-70,scale:1.12,ease:'none'},0).to('#near',{y:-140,scale:1.45,transformOrigin:'50% 100%',ease:'none'},0)
+ .to('.title',{yPercent:-140,ease:'none',duration:.7},0)
+ .to('.hint',{opacity:0,duration:.1},0)
+ .to('.hero2',{opacity:1,duration:.3},.6);
+
+// chapters crossfade
+const chs=gsap.utils.toArray('.ch'),ct=gsap.timeline({scrollTrigger:{trigger:'#w2',start:'top top',end:'bottom bottom',scrub:1,onUpdate(){chs.forEach(c=>{const v=c.querySelector('video');if(v)gsap.getProperty(c,'opacity')>.05?v.play().catch(()=>{}):v.pause()})}}});
+chs.forEach((c,i)=>{ct.fromTo(c,{opacity:0,y:80},{opacity:1,y:0,duration:.4},i)
+ if(i<chs.length-1)ct.to(c,{opacity:0,y:-80,duration:.4},i+.7)});
+
+// skills
+gsap.from('.card',{y:80,opacity:0,rotate:3,stagger:.12,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.grid',start:'top 80%'}});
+gsap.fromTo('#mq',{x:'10%'},{x:'-60%',ease:'none',scrollTrigger:{trigger:'#mq',scrub:1,start:'top bottom',end:'bottom top'}});
+gsap.from('.end h2',{scale:.6,opacity:0,scrollTrigger:{trigger:'.end',start:'top 60%',end:'top 10%',scrub:1}});
+
+
+// ---- Welcome to Ax07.dev: a scroll-driven night drive (all drawn in SVG, one render(p) per frame) ----
+gsap.timeline({scrollTrigger:{trigger:'#w3',start:'top top',end:'bottom bottom',scrub:1}})
+ .to('#frame',{clipPath:'inset(0% 0% round 0px)',ease:'none',duration:2},0)
+ .to('#vt',{opacity:1,y:0,duration:.5},5).to('#vt',{opacity:0,y:-60,duration:.5},9.5);
+gsap.set('#vt',{y:60});
+const NS='http://www.w3.org/2000/svg',sc=document.getElementById('sc'),S0=270,ZN=3;
+const P=(x,z)=>{const s=ZN/z;return[500+x*S0*s,300+300*s,s]}; // world (lane x, depth z) -> screen
+const smooth=t=>{t=Math.min(1,Math.max(0,t));return t*t*(3-2*t)},lerp=(a,b,t)=>a+(b-a)*t;
+let sky='';for(let x=0,r=7;x<1000;){const w=22+(r=r*9301%233280)%40,h=40+(r=r*9301%233280)%110;sky+=`<rect x="${x}" y="${300-h}" width="${w}" height="${h}"/>`;x+=w+(r%5)}
+const road=`M${P(-2.2,400)[0]},${P(-2.2,400)[1]} L${P(2.2,400)[0]},${P(2.2,400)[1]} L${P(2.2,2)[0]},${P(2.2,2)[1]} L${P(-2.2,2)[0]},${P(-2.2,2)[1]}Z`;
+const edge=x=>`M${P(x,400)[0]},${P(x,400)[1]} L${P(x,2)[0]},${P(x,2)[1]}`;
+const car=(c,hero)=>`<ellipse cy="2" rx="58" ry="7" fill="#000" opacity=".5"/><rect x="-50" y="-32" width="100" height="28" rx="7" fill="${c}"/><path d="M-38,-32L-28,-54H28L38,-32Z" fill="${c}"/><path d="M-30,-34L-24,-50H24L30,-34Z" fill="#0b0716"/><rect x="-48" y="-26" width="22" height="9" rx="3" fill="#ff2040"/><rect x="26" y="-26" width="22" height="9" rx="3" fill="#ff2040"/><rect x="-16" y="-18" width="32" height="9" rx="2" fill="#ddd" opacity=".85"/><rect x="-50" y="-8" width="16" height="10" rx="3" fill="#050308"/><rect x="34" y="-8" width="16" height="10" rx="3" fill="#050308"/>`
+ +(hero?`<rect x="-44" y="-59" width="88" height="5" rx="2" fill="#050308"/><circle cx="-37" cy="-22" r="34" fill="url(#gl)"/><circle cx="37" cy="-22" r="34" fill="url(#gl)"/>`:'');
+sc.innerHTML=`<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12051f"/><stop offset=".65" stop-color="#c2306f"/><stop offset="1" stop-color="#ff9a3d"/></linearGradient>
+<radialGradient id="gl"><stop offset="0" stop-color="#ff2040"/><stop offset="1" stop-color="#ff2040" stop-opacity="0"/></radialGradient>
+<linearGradient id="bm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient></defs>
+<rect width="1000" height="300" fill="url(#sk)"/><circle cx="500" cy="285" r="80" fill="#ffe45e" opacity=".8"/>
+<g fill="#2a0a4e">${sky}</g><rect y="300" width="1000" height="300" fill="#0d0518"/>
+<path d="${road}" fill="#1b1230"/><path d="${edge(-2.2)}M${P(2.2,400)[0]},${P(2.2,400)[1]} L${P(2.2,2)[0]},${P(2.2,2)[1]}" stroke="#ff3d8b" stroke-width="4" fill="none"/>
+<path id="dash" fill="#fff" opacity=".85"/><g id="cars"></g>
+<path id="beam" fill="url(#bm)"/><g id="heli"><g class="rot"><line x1="-85" x2="85" y1="-30" y2="-30" stroke="#ddd" stroke-width="4" stroke-linecap="round"/></g>
+<line y1="-30" y2="-14" stroke="#111" stroke-width="5"/><ellipse rx="44" ry="21" fill="#23232f"/><path d="M14,-14Q40,-14 40,2H14Z" fill="#7fd8ff" opacity=".8"/><path d="M-36,-6H-120L-128,-24L-116,-24L-104,-10H-36Z" fill="#23232f"/>
+<line x1="-30" x2="34" y1="26" y2="26" stroke="#111" stroke-width="4"/><circle cx="-124" cy="-20" r="4" fill="#ff2040"/></g>`;
+const $s=id=>sc.querySelector('#'+id),carsG=$s('cars'),heli=$s('heli'),beam=$s('beam'),dash=$s('dash');
+const mkCar=(c,hero)=>{const g=document.createElementNS(NS,'g');g.innerHTML=car(c,hero);carsG.appendChild(g);return g};
+const hero=mkCar('#ff3d8b',true),traffic=[['#2de2d0',-1.47,6],['#ffd23f',0,14],['#8a5cff',1.47,22],['#e8e8f0',-1.47,30],['#ff8a3d',0,38],['#3d7bff',1.47,45],['#2de2d0',0,4]].map(([c,x,z])=>({g:mkCar(c),x,z}));
+const place=(g,x,z,op=1)=>{const[sx,sy,s]=P(x,z);g.setAttribute('transform',`translate(${sx},${sy}) scale(${1.5*S0*s/100})`);g.style.opacity=op};
+function render(p){
+ const ph=p*150,M=54;let d='';
+ for(const x of[-.73,.73])for(let i=0;i<9;i++){const z=1.8+(((i*6-ph)%M)+M)%M,a=P(x-.05,z),b=P(x+.05,z),c=P(x+.05,z+2.5),e=P(x-.05,z+2.5);
+  d+=`M${a[0]},${a[1]}L${b[0]},${b[1]}L${c[0]},${c[1]}L${e[0]},${e[1]}Z`}
+ dash.setAttribute('d',d);
+ const q=smooth((p-.5)/.45),hz=4.2+q*q*60,hx=Math.sin(p*18)*1.3*(1-q);
+ const list=traffic.map(t=>{const z=1.6+(((t.z-p*70)%50)+50)%50;return{g:t.g,x:t.x,z,op:Math.min(z>44?(51.6-z)/7.6:1,(z-1.6)/1.8)}});
+ list.push({g:hero,x:hx,z:hz,op:1});list.sort((a,b)=>b.z-a.z);
+ list.forEach(o=>{place(o.g,o.x,o.z,o.op);carsG.appendChild(o.g)});
+ // helicopter swoops in from top-left and chases the car to the horizon
+ const hq=smooth((p-.52)/.43),[cx,cy,cs]=P(hx,hz),k=lerp(1.3,.16,hq);
+ const px=lerp(120,cx+6,hq),py=lerp(70,cy-52*cs*1.5-8,hq)+Math.sin(p*40)*4*(1-hq);
+ heli.setAttribute('transform',`translate(${px},${py}) scale(${k})`);heli.style.opacity=Math.min(1,hq*10);
+ const w=45*cs*1.5;beam.setAttribute('d',`M${px},${py+10*k}L${cx-w},${cy}L${cx+w},${cy}Z`);beam.style.opacity=hq>0?.55:0}
+
+// ---- GTA-style animated postcards for the three chapters (drop assets/gta-1..3.mp4 to override) ----
+const svgW=b=>`<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice">${b}</svg>`;
+const grad=(id,a)=>`<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">${a.map(([o,c])=>`<stop offset="${o}" stop-color="${c}"/>`).join('')}</linearGradient>`;
+const sceneSea=()=>svgW(`<defs>${grad('g1',[[0,'#2a0a5e'],[.7,'#ff3d8b'],[1,'#ff9a3d']])}</defs><rect width="320" height="180" fill="url(#g1)"/><circle cx="160" cy="96" r="40" fill="#ffe45e"/>
+<rect y="100" width="320" height="80" fill="#1d0a40"/><g class="wv" fill="#ff9ac8" opacity=".55">${[108,116,127,140,156].map((y,i)=>`<rect x="${20+i*40}" y="${y}" width="${120-i*8}" height="${1.5+i*.5}" style="animation-delay:${-i*.5}s"/>`).join('')}</g>
+<g class="boat"><path d="M0,110 L26,110 L20,117 L4,117Z" fill="#fff"/><rect x="8" y="104" width="10" height="6" fill="#2de2d0"/><path d="M0,117 L-30,119 L-30,116Z" fill="#fff" opacity=".5"/></g>
+<g class="sw"><g transform="translate(-10,52) scale(.3)" style="color:#07020d">${palm(60,300)}</g></g>
+<g class="sw" style="animation-delay:-1.5s"><g transform="translate(250,40) scale(.34)" style="color:#07020d">${palm(60,300)}</g></g>
+<rect y="168" width="320" height="12" fill="#07020d"/>`);
+const sceneCity=()=>{let b='',x=0,r=5;while(x<320){const w=16+(r=r*9301%233280)%22,h=50+(r=r*9301%233280)%90;b+=`<rect x="${x}" y="${130-h}" width="${w}" height="${h}" fill="#2e1259"/>`;
+ for(let wy=130-h+5;wy<124;wy+=8)for(let wx=x+3;wx<x+w-3;wx+=6)if((r=r*9301%233280)%3===0)b+=`<rect class="tw" x="${wx}" y="${wy}" width="2.5" height="3.5" fill="#ffd27a" style="animation-delay:${-(r%24)/10}s"/>`;x+=w+2}
+ const cars=[...Array(9)].map((_,i)=>`<rect class="st" x="${-i*50}" y="${150+i%2*10}" width="22" height="2.5" rx="1.2" fill="${i%2?'#ff2040':'#fff'}" style="animation-duration:${1.6+i%3*.5}s;animation-delay:${-i*.4}s"/>`).join('');
+ return svgW(`<defs>${grad('g2',[[0,'#05010d'],[.8,'#4a1245'],[1,'#c2306f']])}</defs><rect width="320" height="180" fill="url(#g2)"/><circle cx="270" cy="30" r="12" fill="#ffe9c4" opacity=".9"/>${b}
+<rect y="130" width="320" height="50" fill="#0d0518"/>${cars}<g class="tw" style="animation-duration:1.2s"><text x="132" y="62" font-family="Anton" font-size="16" fill="#ff3d8b" style="filter:drop-shadow(0 0 4px #ff3d8b)">AX07.DEV</text></g>`)};
+const sceneWanted=()=>{const sky=(base,col,n,hmin,hmax,seed)=>{let o='',x=-5,r=seed;while(x<320){const w=14+(r=r*9301%233280)%24,h=hmin+(r=r*9301%233280)%(hmax-hmin);o+=`<rect x="${x}" y="${base-h}" width="${w}" height="${h}" fill="${col}"/>`;x+=w+1}return o};
+ return svgW(`<defs>${grad('g3',[[0,'#1a0640'],[.55,'#c2306f'],[1,'#ff9a3d']])}<linearGradient id="bm3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+<rect width="320" height="180" fill="url(#g3)"/><circle cx="90" cy="120" r="34" fill="#ffe45e" opacity=".85"/>
+${sky(160,'#5a1c6e',0,30,95,3)}${sky(180,'#1b0833',0,45,120,11)}
+<g class="boat" style="animation-duration:8s"><g transform="translate(0,34) scale(.34)"><path d="M0,16L-95,380L70,380Z" fill="url(#bm3)" opacity=".7"/><g class="rot"><line x1="-85" x2="85" y1="-30" y2="-30" stroke="#eee" stroke-width="4" stroke-linecap="round"/></g><line y1="-30" y2="-14" stroke="#111" stroke-width="5"/><ellipse rx="44" ry="21" fill="#0b0716"/><path d="M14,-14Q40,-14 40,2H14Z" fill="#7fd8ff" opacity=".8"/><path d="M-36,-6H-120L-128,-24L-116,-24L-104,-10H-36Z" fill="#0b0716"/><circle cx="-124" cy="-20" r="5" class="pa" fill="#ff2040"/></g></g>
+<g>${[0,1,2,3,4].map(i=>`<path class="star" transform="translate(${222+i*17},4) scale(.9)" d="M7,0L9,5.2L14.5,5.4L10.2,8.8L11.7,14L7,11L2.3,14L3.8,8.8L-.5,5.4L5,5.2Z" style="animation-delay:${i*.35}s"/>`).join('')}</g>`)};
+document.querySelectorAll('.art').forEach(a=>a.insertAdjacentHTML('afterbegin',[sceneSea,sceneCity,sceneWanted][a.dataset.s-1]()));
+let cur=0,tgt=0;render(0);
+ScrollTrigger.create({trigger:'#w3',start:'top top',end:'bottom bottom',onUpdate:s=>tgt=s.progress});
+gsap.ticker.add(()=>{if(Math.abs(tgt-cur)>1e-4){cur+=(tgt-cur)*.12;render(cur)}});
+</script>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+const cv=document.getElementById('gc'),box=cv.parentElement;
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
+const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(35,1,.1,100);C.position.set(0,1.2,9);
+S.add(new THREE.AmbientLight(0xa080c0,2.6));
+const l1=new THREE.PointLight(0xff3d8b,120,30);l1.position.set(-5,4,5);const l2=new THREE.PointLight(0x2de2d0,120,30);l2.position.set(6,-2,4);S.add(l1,l2);
+S.environment=new THREE.PMREMGenerator(R).fromScene(new RoomEnvironment()).texture;
+const ctl=new OrbitControls(C,cv);ctl.enableZoom=false;ctl.enablePan=false;ctl.enableDamping=true;cv.style.touchAction='pan-y'; // pan-y keeps page scroll working on touch
+
+// original procedural pistol (not game art), grouped into the 5 things Ax07.dev sells
+const M=(c,e=0)=>new THREE.MeshStandardMaterial({color:c,metalness:.6,roughness:.4,emissive:0x2de2d0,emissiveIntensity:e});
+const cyl=(r,l)=>{const g=new THREE.CylinderGeometry(r,r,l,24);g.rotateZ(Math.PI/2);return g};
+const G={ // group: [explode offset, label, service]
+ barrel:[[2.6,.5,.3],'Barrel','3D web animation'],
+ trigger:[[.9,-1.7,.8],'Trigger','WhatsApp intake'],
+ magazine:[[-.9,-2.4,-.6],'Magazine','CRM'],
+ handle:[[-2.3,-.5,.4],'Handle','User dashboard'],
+ sights:[[0,2.7,0],'Sights','Local SEO']};
+const parts=[
+ ['barrel',new THREE.BoxGeometry(2.6,.5,.42),[0,.55,0],0,0x2b2b36],
+ ['barrel',cyl(.1,1.2),[1.6,.55,0],0,0x15151c],
+ ['barrel',cyl(.07,1.4),[.4,.55,0],0,0x2de2d0,.6],
+ ['handle',new THREE.BoxGeometry(2.2,.28,.36),[-.1,.2,0],0,0x3a3a48],
+ ['handle',new THREE.BoxGeometry(.55,1.1,.34),[-.85,-.35,0],.2,0x1d1d26],
+ ['handle',new THREE.BoxGeometry(.14,.22,.1),[-1.4,.85,0],.3,0x55556a],
+ ['magazine',new THREE.BoxGeometry(.4,.55,.26),[-.98,-1.0,0],.2,0x55556a],
+ ['trigger',new THREE.TorusGeometry(.24,.045,8,20,Math.PI),[.45,.05,0],Math.PI,0x2b2b36],
+ ['trigger',new THREE.BoxGeometry(.07,.24,.07),[.42,.05,0],.2,0xff3d8b],
+ ['sights',new THREE.BoxGeometry(.1,.12,.08),[1.1,.85,0],0,0xff3d8b],
+ ['sights',new THREE.BoxGeometry(.16,.12,.1),[-1.1,.85,0],0,0xff3d8b]
+].map(([n,g,p,rz,c,em])=>{const m=new THREE.Mesh(g,M(c,em));m.position.set(...p);m.rotation.z=rz;
+ m.add(new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:0xff9ac8,transparent:true,opacity:.35})));
+ m.userData={home:m.position.clone(),ex:new THREE.Vector3(...G[n][0]),g:n};return m});
+const gun=new THREE.Group();parts.forEach(p=>gun.add(p));gun.rotation.y=-.5;S.add(gun);
+
+// floating labels, one per group, projected from the exploded part positions
+const labels=Object.entries(G).map(([k,[,t,s]])=>{const d=document.createElement('div');d.className='lb';d.innerHTML=`<b>${t}</b><span>${s}</span>`;box.appendChild(d);return{k,d}});
+
+let e=0,spin=0;
+ScrollTrigger.create({trigger:'#w4',start:'top top',end:'bottom bottom',scrub:true,onUpdate:s=>{
+ const p=s.progress;e=Math.min(1,Math.max(0,(p-.25)/.5));spin=p;
+ const open=e>.05;document.getElementById('gt').textContent=open?'The Ax07.dev loadout':'Hands on';
+ document.getElementById('gp').textContent=open?'5 PARTS · ONE SYSTEM':'DRAG TO INSPECT · SCROLL TO TAKE IT APART'}});
+const ease=t=>t*t*(3-2*t),v=new THREE.Vector3();
+function size(){const w=box.clientWidth,h=box.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.position.z=w/h<1?13:9;C.updateProjectionMatrix()}
+new ResizeObserver(size).observe(box);size();
+(function loop(){parts.forEach(p=>p.position.copy(p.userData.home).addScaledVector(p.userData.ex,ease(e)));
+ gun.rotation.y=-.5+spin*Math.PI*.5;gun.rotation.x=ease(e)*.2;ctl.update();R.render(S,C);
+ const w=box.clientWidth,h=box.clientHeight,show=ease(Math.min(1,Math.max(0,(e-.7)/.3)));
+ labels.forEach(({k,d})=>{const mine=parts.filter(p=>p.userData.g===k);v.set(0,0,0);mine.forEach(p=>v.add(p.getWorldPosition(new THREE.Vector3())));
+  v.divideScalar(mine.length).project(C);d.style.transform=`translate(${(v.x*.5+.5)*w+14}px,${(-v.y*.5+.5)*h-14}px)`;d.style.opacity=show});
+ requestAnimationFrame(loop)})();
+</script></body></html>
