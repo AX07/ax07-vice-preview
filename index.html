@@ -36,9 +36,11 @@ nav a{color:#fff;text-decoration:none}
 /* 3D gun */
 .gun{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 55%,#4a1245,#0a0314 70%)}
 .gun canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
-.gun .cap{position:absolute;left:5vw;top:14vh;pointer-events:none}
-.gun .cap h2{font-size:clamp(44px,8vw,120px)}
+.gun .cap{position:absolute;left:5vw;bottom:7vh;pointer-events:none;display:grid}
+.gun .cap>*{grid-area:1/1}
+.gun .cap h2{font-size:clamp(36px,6vw,92px)}
 .gun .cap p{letter-spacing:.3em;font-size:13px;color:var(--teal);margin-top:1rem}
+.gun .cap .b{opacity:0}
 .stage{height:100vh;position:sticky;top:0;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 70% 30%,#5a1456,#12051f 70%)}
 .ch{position:absolute;inset:0;opacity:0}
 .ch>div:first-child{position:absolute;left:6vw;bottom:10vh;max-width:min(520px,88vw)}
@@ -87,7 +89,7 @@ nav a{color:#fff;text-decoration:none}
  <div class="vt big" id="vt">Welcome<br>to Ax07.dev</div></div></div></div>
 
 <div class="wrap" id="w4" style="height:500vh"><div class="gun"><canvas id="gc"></canvas>
- <div class="cap"><h2 class="big" id="gt">Hands on</h2><p id="gp">DRAG TO INSPECT · SCROLL TO TAKE IT APART</p></div></div></div>
+ <div class="cap"><div class="a"><h2 class="big">Hands on</h2><p>DRAG TO INSPECT · SCROLL TO TAKE IT APART</p></div><div class="b"><h2 class="big">The Ax07.dev loadout</h2><p>5 PARTS · ONE SYSTEM</p></div></div></div></div>
 
 <div class="wrap" id="w2"><div class="stage" id="stage">
  <div class="ch"><div><div class="n">01</div><h2>Arrival</h2><p>It started with one question: why do websites feel so flat? I wanted pages that move like a film and still load fast.</p></div><div class="win"><div class="art" data-s="1"><video src="assets/gta-1.mp4" muted loop playsinline preload="metadata" onerror="this.remove()"></video></div><small>OCEAN DRIVE · 6:42 PM</small></div></div>
@@ -198,11 +200,11 @@ const sceneSea=()=>svgW(`<defs>${grad('g1',[[0,'#2a0a5e'],[.7,'#ff3d8b'],[1,'#ff
 <rect y="168" width="320" height="12" fill="#07020d"/>`);
 const sceneCity=()=>{let b='',x=0,r=5;while(x<320){const w=16+(r=r*9301%233280)%22,h=50+(r=r*9301%233280)%90;b+=`<rect x="${x}" y="${130-h}" width="${w}" height="${h}" fill="#2e1259"/>`;
  for(let wy=130-h+5;wy<124;wy+=8)for(let wx=x+3;wx<x+w-3;wx+=6)if((r=r*9301%233280)%3===0)b+=`<rect class="tw" x="${wx}" y="${wy}" width="2.5" height="3.5" fill="#ffd27a" style="animation-delay:${-(r%24)/10}s"/>`;x+=w+2}
- const side=(c,y,left,dur,del)=>`<g class="${left?'dl':'dr'}" style="animation-duration:${dur}s;animation-delay:${-del}s"><g transform="translate(${left?30:0},${y})${left?' scale(-1,1)':''}"><polygon points="30,5 64,0 64,11 30,8" fill="#ffe9a0" opacity=".2"/><path d="M0,9L0,5.5Q2,4.5 6,4L10,1.5Q12,0 17,0H21Q24,.5 26,3.5L30,4.5V9Z" fill="${c}"/><path d="M11,1.8L17,1H21L24,3.5H11Z" fill="#0b0716" opacity=".85"/><rect y="5" width="2" height="2" fill="#ff2040"/><rect x="28" y="5" width="2" height="2" fill="#fff6c0"/><circle cx="7" cy="9" r="2.4" fill="#050308" stroke="#888" stroke-width=".6"/><circle cx="23" cy="9" r="2.4" fill="#050308" stroke="#888" stroke-width=".6"/></g></g>`;
- const cars='<line x1="0" x2="320" y1="154" y2="154" stroke="#fff" stroke-opacity=".3" stroke-dasharray="8 8"/>'+side('#2de2d0',141,0,6,0)+side('#ffd23f',141,0,6,3)+side('#ff3d8b',158,1,5,1)+side('#8a5cff',158,1,5,3.5)+side('#e8e8f0',158,1,5.5,2);
+ const side=(c,y,left,dur,del)=>`<g class="${left?'dl':'dr'}" style="animation-duration:${dur}s;animation-delay:${-del}s"><g transform="translate(${left?30:0},${y})${left?' scale(-1,1)':''}"><polygon points="30,5 64,0 64,11 30,8" fill="#ffe9a0" opacity=".2"/><path d="M0,9V5Q1,4.3 3,4L6,3.6L8,1.5Q10,0 14,0H18Q20,.5 22,3.2L30,4.5V9Z" fill="${c}"/><path d="M8.6,1.9L14,1H18L20.4,3.3H8.6Z" fill="#0b0716" opacity=".85"/><rect y="5" width="2" height="2" fill="#ff2040"/><rect x="28" y="5" width="2" height="2" fill="#fff6c0"/><circle cx="7" cy="9" r="2.4" fill="#050308" stroke="#888" stroke-width=".6"/><circle cx="23" cy="9" r="2.4" fill="#050308" stroke="#888" stroke-width=".6"/></g></g>`;
+ const cars='<line x1="0" x2="320" y1="154" y2="154" stroke="#fff" stroke-opacity=".3" stroke-dasharray="8 8"/>'+side('#2de2d0',141,1,6,0)+side('#ffd23f',141,1,6,3)+side('#ff3d8b',158,0,5,1)+side('#8a5cff',158,0,5,3.5)+side('#e8e8f0',158,0,5.5,2);
  return svgW(`<defs>${grad('g2',[[0,'#05010d'],[.8,'#4a1245'],[1,'#c2306f']])}</defs><rect width="320" height="180" fill="url(#g2)"/><circle cx="270" cy="30" r="12" fill="#ffe9c4" opacity=".9"/>${b}
 <rect y="130" width="320" height="50" fill="#0d0518"/>${cars}<g class="tw" style="animation-duration:1.2s"><text x="132" y="62" font-family="Anton" font-size="16" fill="#ff3d8b" style="filter:drop-shadow(0 0 4px #ff3d8b)">AX07.DEV</text></g>`)};
-const sceneWanted=()=>{const sky=(base,col,n,hmin,hmax,seed)=>{let o='',x=-5,r=seed;while(x<320){const w=14+(r=r*9301%233280)%24,h=hmin+(r=r*9301%233280)%(hmax-hmin);o+=`<rect x="${x}" y="${base-h}" width="${w}" height="${h}" fill="${col}"/>`;x+=w+1}return o};
+const sceneWanted=()=>{const sky=(base,col,n,hmin,hmax,seed)=>{let o='',x=-5,r=seed;while(x<320){const w=14+(r=r*9301%233280)%24,h=hmin+(r=r*9301%233280)%(hmax-hmin)+x*.16;o+=`<rect x="${x}" y="${base-h}" width="${w}" height="${h}" fill="${col}"/>`;x+=w+1}return o};
  return svgW(`<defs>${grad('g3',[[0,'#1a0640'],[.55,'#c2306f'],[1,'#ff9a3d']])}<linearGradient id="bm3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
 <rect width="320" height="180" fill="url(#g3)"/><circle cx="110" cy="98" r="38" fill="#ffe45e" opacity=".9"/>
 ${sky(160,'#5a1c6e',0,10,34,3)}${sky(180,'#1b0833',0,14,46,11)}
@@ -232,7 +234,7 @@ const cyl=(r,l)=>{const g=new THREE.CylinderGeometry(r,r,l,24);g.rotateZ(Math.PI
 const G={ // group: [explode offset, label, service]
  barrel:[[2.6,.5,.3],'Barrel','3D web animation'],
  trigger:[[.9,-1.7,.8],'Trigger','WhatsApp intake'],
- magazine:[[-.9,-2.4,-.6],'Magazine','CRM'],
+ magazine:[[-.9,-1.9,-.6],'Magazine','CRM'],
  handle:[[-2.3,-.5,.4],'Handle','User dashboard'],
  sights:[[0,1.9,0],'Sights','Local SEO']};
 const parts=[
@@ -250,7 +252,7 @@ const parts=[
 ].map(([n,g,p,rz,c,em])=>{const m=new THREE.Mesh(g,M(c,em));m.position.set(...p);m.rotation.z=rz;
  m.add(new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:0xff9ac8,transparent:true,opacity:.35})));
  m.userData={home:m.position.clone(),ex:new THREE.Vector3(...G[n][0]),g:n};return m});
-const gun=new THREE.Group();parts.forEach(p=>gun.add(p));gun.rotation.y=-.5;S.add(gun);
+const gun=new THREE.Group();parts.forEach(p=>gun.add(p));gun.rotation.y=-.5;gun.position.y=.55;S.add(gun);
 
 // floating labels, one per group, projected from the exploded part positions
 const labels=Object.entries(G).map(([k,[,t,s]])=>{const d=document.createElement('div');d.className='lb';d.innerHTML=`<b>${t}</b><span>${s}</span>`;box.appendChild(d);return{k,d}});
@@ -258,10 +260,10 @@ const labels=Object.entries(G).map(([k,[,t,s]])=>{const d=document.createElement
 let e=0,spin=0;
 ScrollTrigger.create({trigger:'#w4',start:'top top',end:'bottom bottom',scrub:true,onUpdate:s=>{
  const p=s.progress;e=Math.min(1,Math.max(0,(p-.25)/.5));spin=p;
- const open=e>.05;document.getElementById('gt').textContent=open?'The Ax07.dev loadout':'Hands on';
- document.getElementById('gp').textContent=open?'5 PARTS · ONE SYSTEM':'DRAG TO INSPECT · SCROLL TO TAKE IT APART'}});
+ const t=Math.min(1,e*2.5),a=document.querySelector('.cap .a').style,b=document.querySelector('.cap .b').style; // crossfade, not a cut
+ a.opacity=1-t;a.transform=`translateY(${-t*24}px)`;b.opacity=t;b.transform=`translateY(${(1-t)*24}px)`}});
 const ease=t=>t*t*(3-2*t),v=new THREE.Vector3();
-function size(){const w=box.clientWidth,h=box.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.position.z=w/h<1?13:9;C.updateProjectionMatrix()}
+function size(){const w=box.clientWidth,h=box.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.position.z=w/h<1?15:11;C.updateProjectionMatrix()}
 new ResizeObserver(size).observe(box);size();
 (function loop(){parts.forEach(p=>p.position.copy(p.userData.home).addScaledVector(p.userData.ex,ease(e)*.5));
  gun.rotation.y=-.5+spin*Math.PI*.5;gun.rotation.x=ease(e)*.2;ctl.update();R.render(S,C);
